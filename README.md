@@ -3,7 +3,6 @@
 ## Project Description
 
 This project is an AI-powered Resume Analyzer and Job Match application that uses **Sentence-BERT embeddings** and a **machine learning classifier** to predict how well a candidate’s resume matches a given job description. It extracts and compares skills from both documents, provides match scores, and can send email notifications with the results.
-
 ---
 
 ## Features
@@ -40,13 +39,10 @@ This project is an AI-powered Resume Analyzer and Job Match application that use
 ### Installation
 
 1. Clone the repository
-
-```bash
 git clone https://github.com/YOUR_USERNAME/resume-analyzer.git
 cd resume-analyzer
 
 2. Create and activate Conda environment (or use virtualenv)
-
 conda create -n resume_match_env python=3.9 -y
 conda activate resume_match_env
 
@@ -66,7 +62,7 @@ MAIL_PORT=587
 MAIL_USE_TLS=True
 Make sure .env is in .gitignore to avoid exposing secrets.
 
-Running the Application
+### Running the Application
 1. Start the Flask backend server:
 python app_bert.py
 
@@ -76,7 +72,7 @@ python app_bert.py
 
 4. Submit and view the matching score, skill matches, and get notified by email if you provided one.
 
-Project Structure
+## Project Structure
 resume-analyzer/
 ├── app_bert.py              # Flask backend application
 ├── resume_match_BERT.py     # Script to train and save the ML model
@@ -89,14 +85,14 @@ resume-analyzer/
 ├── .env.example             # Sample environment file template
 └── README.md                # Project documentation
 
-Notes and Tips
+## Notes and Tips
 The model is trained on a small sample dataset; for real use, gather a larger and more diverse dataset.
 Always keep your .env file private and secure.
 You can deploy the backend on platforms like Heroku, Render, or AWS.
 For better UI/UX, customize the frontend or integrate with your existing website (e.g., Wix).
 
-License
+## License
 MIT License
 
-Contact
+## Contact
 For questions or contributions, please open an issue or contact [ma.abegail.mabalot@gmail.com].
