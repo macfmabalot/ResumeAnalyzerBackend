@@ -1,6 +1,5 @@
 # app_bert.py
 
-from flask import Flask, request, jsonify
 import joblib
 from sentence_transformers import SentenceTransformer
 import os
@@ -8,22 +7,14 @@ import docx, PyPDF2
 import spacy
 nlp = spacy.load("en_core_web_sm")
 from flask_mail import Mail, Message
-
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Optional: allows frontend requests from a different origin
+
 clf = joblib.load('resume_matcher_bert_model.joblib')
 encoder = SentenceTransformer('bert_encoder')
-
-app.config.update(
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=587,
-    MAIL_USE_TLS=True,
-    MAIL_USERNAME='ma.abegail.mabalot@gmail.com',
-    MAIL_PASSWORD=''
-)
-
-mail = Mail(app)
-
 
 def extract_text(file_path):
     if file_path.endswith('.pdf'):
@@ -44,7 +35,8 @@ def extract_skills(text):
         'python', 'java', 'c++', 'sql', 'aws', 'azure', 'excel', 'power bi',
         'machine learning', 'deep learning', 'data analysis', 'nlp', 'seo',
         'tensorflow', 'keras', 'scikit-learn', 'docker', 'react', 'node.js',
-        'pytorch', 'git', 'adobe photoshop', 'illustrator', 'crm', 'google ads'
+        'pytorch', 'git', 'adobe photoshop', 'illustrator', 'crm', 'google ads',
+        'HTML', 'CSS','ASP.net', 'Visual Basics', 'MVC C#'
     }
 
     for chunk in doc.noun_chunks:
@@ -57,14 +49,13 @@ def extract_skills(text):
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    resume = request.files['resume']
-    jobdesc = request.form['jobdesc']
-    user_email = request.form.get('email')  # get email from form
+    jobdesc = request.form.get("jobdesc")
+    resume = request.files.get("resume")
 
     path = os.path.join('uploads', resume.filename)
     resume.save(path)
     resume_text = extract_text(path)
-
+    
     res_embed = encoder.encode([resume_text])[0]
     job_embed = encoder.encode([jobdesc])[0]
     feature = abs(res_embed - job_embed).reshape(1, -1)
@@ -76,32 +67,10 @@ def analyze():
     matched = [s for s in job_skills if s in resume_skills]
     missing = [s for s in job_skills if s not in resume_skills]
 
-    # Compose email body
-    body = f"""
-    Resume Analysis Results:
+    if not jobdesc or not resume:
+        return jsonify({"error": "Missing job description or resume"}), 400
 
-    Match Score: {round(score * 100, 2)}%
-
-    Matched Skills:
-    {', '.join(matched) if matched else 'None'}
-
-    Missing Skills:
-    {', '.join(missing) if missing else 'None'}
-
-    Thank you for using our Resume Analyzer.
-    """
-
-    # Send email if user provided email
-    if user_email:
-        msg = Message(subject="Your Resume Analysis Results",
-                      sender=app.config['MAIL_USERNAME'],
-                      recipients=[user_email],
-                      body=body)
-        #try:
-        #    mail.send(msg)
-       # except Exception as e:
-       #     print(f"Error sending email: {e}")
-
+    # 🧪 For now: just return dummy match score and skills
     return jsonify({
         'match_score': round(float(score) * 100, 2),
         'skills': {
@@ -110,9 +79,6 @@ def analyze():
         }
     })
 
-
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     os.makedirs('uploads', exist_ok=True)
     app.run(debug=True)
