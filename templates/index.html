@@ -102,7 +102,7 @@
 
     const formData = new FormData(form);
     try {
-      const res = await fetch("https://YOUR-BACKEND-URL/analyze", {
+      const res = await fetch("https://resumeanalyzerbackend-rt30.onrender.com/analyze", {
         method: "POST",
         body: formData
       });
