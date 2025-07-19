@@ -14,9 +14,7 @@ This project is an AI-powered Resume Analyzer and Job Match application that use
 - Visualize matched and missing skills
 - Optional email notifications with analysis results
 - Bootstrap-based responsive frontend interface
-
 ---
-
 ## Technology Stack
 
 - Python, Flask (backend API)
@@ -25,7 +23,6 @@ This project is an AI-powered Resume Analyzer and Job Match application that use
 - Joblib (model serialization)
 - Bootstrap 5 (frontend UI)
 - Flask-Mail (email notifications)
-
 ---
 
 ## Setup Instructions
@@ -39,7 +36,7 @@ This project is an AI-powered Resume Analyzer and Job Match application that use
 ### Installation
 
 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/resume-analyzer.git
+git clone https://github.com/macfmabalot/ResumeAnalyzerBackend.git
 cd resume-analyzer
 
 2. Create and activate Conda environment (or use virtualenv)
