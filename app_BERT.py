@@ -97,7 +97,10 @@ def analyze():
                       sender=app.config['MAIL_USERNAME'],
                       recipients=[user_email],
                       body=body)
-
+        #try:
+        #    mail.send(msg)
+       # except Exception as e:
+       #     print(f"Error sending email: {e}")
 
     return jsonify({
         'match_score': round(float(score) * 100, 2),
