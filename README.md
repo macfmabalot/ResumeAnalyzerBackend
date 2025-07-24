@@ -36,18 +36,23 @@ This project is an AI-powered Resume Analyzer and Job Match application that use
 ### Installation
 
 1. Clone the repository
+```bash
 git clone https://github.com/macfmabalot/ResumeAnalyzerBackend.git
 cd resume-analyzer
-
+```
 2. Create and activate Conda environment (or use virtualenv)
+```bash
 conda create -n resume_match_env python=3.9 -y
 conda activate resume_match_env
-
+```
 3. Install dependencies
+```bash
 pip install -r requirements.txt
-
+```
 4. Train the model (optional, if you want to retrain)
+```bash
 python resume_match_BERT.py
+```
 *** This will generate resume_matcher_bert_model.joblib in the current directory.
 
 5. Configure email (optional)
@@ -61,8 +66,9 @@ Make sure .env is in .gitignore to avoid exposing secrets.
 
 ### Running the Application
 1. Start the Flask backend server:
+```bash
 python app_bert.py
-
+```
 2. Open index.html in your browser (or serve it via a web server)
 
 3. Use the form to upload a resume PDF, enter a job description, and optionally your email.
@@ -70,6 +76,7 @@ python app_bert.py
 4. Submit and view the matching score, skill matches, and get notified by email if you provided one.
 
 ## Project Structure
+```
 resume-analyzer/
 ├── app_bert.py              # Flask backend application
 ├── resume_match_BERT.py     # Script to train and save the ML model
@@ -81,6 +88,7 @@ resume-analyzer/
 ├── requirements.txt         # Python dependencies
 ├── .env.example             # Sample environment file template
 └── README.md                # Project documentation
+```
 
 ## Notes and Tips
 The model is trained on a small sample dataset; for real use, gather a larger and more diverse dataset.
